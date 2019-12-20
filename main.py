@@ -1,9 +1,17 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
-import pandas as pd
-import datetime
 
 if __name__ == "__main__":
+    """
+    Receives IG post URL from user input and opens the URL by chrome driver. Then using BeautifulSoup HTML parser to get
+    hashtags and find matches with the included dictionary file. Does not use Instagram API.
+    """
+    # read from dictionary
+    with open("dict.txt") as dictFile:
+        dictionary = dictFile.readlines()
+        dictionary = [word.rstrip("\n") for word in dictionary]
+    dictSet = set(dictionary)
+
     # Use Chrome driver to obtain source HTML file of URL as string
     url = input("Enter post URL: ")
     driver = webdriver.Chrome()
@@ -27,12 +35,6 @@ if __name__ == "__main__":
     print("Post url: " + url)
     print("Hashtags of this post (" + str(len(hashtags)) + "):")
     print(hashtags)
-
-    # read from dictionary
-    with open("dict.txt") as file:
-        dictionary = file.readlines()
-        dictionary = [word.rstrip("\n") for word in dictionary]
-    dictSet = set(dictionary)
 
     # Find banned tags
     result = hashtags.intersection(dictSet)
