@@ -1,7 +1,8 @@
 # IG_Banned_Hashtags
-Search post for banned hashtags
+Receives IG post URL from user input and opens the URL by chrome driver. Then using BeautifulSoup HTML parser to get
+hashtags and find matches with the included dictionary file. Does not use Instagram API.
 
-Requirements: Google Chrome installed, and chromedriver.exe in the same directory of this program (included)
+Requirements: Google Chrome installed, chromedriver.exe and dict.txt in the same directory of this program  (included)
 
 Sample output:
 ```
