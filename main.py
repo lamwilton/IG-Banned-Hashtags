@@ -5,8 +5,13 @@ import datetime
 
 if __name__ == "__main__":
     # Use Chrome driver to obtain source HTML file of URL as string
+    url = input("Enter post URL: ")
     driver = webdriver.Chrome()
-    driver.get('https://www.instagram.com/p/B6RqMqwHiwt/')
+    try:
+        driver.get(url)
+    except Exception:
+        print("Invalid URL")
+        exit()
     source = driver.page_source
     driver.close()
 
@@ -19,14 +24,15 @@ if __name__ == "__main__":
         if item.string is not None:
             if "#" in item.string:
                 hashtags.add(item.string[1:])   # Removes # sign
-    print("Hashtags of this post:")
+    print("Post url: " + url)
+    print("Hashtags of this post (" + str(len(hashtags)) + "):")
     print(hashtags)
 
     # read from dictionary
     with open("dict.txt") as file:
-        dict = file.readlines()
-        dict = [word.rstrip("\n") for word in dict]
-    dictSet = set(dict)
+        dictionary = file.readlines()
+        dictionary = [word.rstrip("\n") for word in dictionary]
+    dictSet = set(dictionary)
 
     # Find banned tags
     result = hashtags.intersection(dictSet)
